@@ -43,9 +43,10 @@ loginForm.addEventListener('submit',event=>{
   // Explicitly initialize after revealing the page; do not rely on a hidden-page render.
   try{render()}catch(error){console.error('Mobile initial render failed',error);document.querySelector('main').innerHTML='<section class="panel pad"><h1>'+localize('页面暂时无法加载')+'</h1><p>'+localize('请刷新重试，或打开总览。')+'</p><a href="#summary">'+localize('数据总览')+'</a></section>'}
   window.scrollTo(0,0);
-  applyPersonalSettings();
-  updateScratchCount();
-  logoutButton.focus();
+  try{applyPersonalSettings()}catch(error){console.warn(error)}
+  try{updateScratchCount()}catch(error){console.warn(error)}
+  document.querySelector('main').setAttribute('tabindex','-1');
+  document.querySelector('main').focus({preventScroll:true});
 });
 
 logoutButton.addEventListener('click',()=>{

@@ -6,6 +6,7 @@ let uiLanguage='zh-CN';
 try{const saved=sessionStorage.getItem(languageKey);if(uiLanguages.includes(saved))uiLanguage=saved}catch{}
 
 const englishTerms={
+ '手机版':'Mobile',
 "添加到主屏幕":"Add to Home Screen","已添加到主屏幕":"Added to Home Screen","已通过主屏幕打开":"Already open from Home Screen","知道了":"Got it","请在正式在线地址打开，才能添加桌面快捷方式。":"Open the published website to add a Home Screen shortcut.","点击微信右上角“…” → 在浏览器打开。":"Tap the WeChat menu, then Open in browser.","在 Safari 或 Chrome 中选择“添加到主屏幕”。":"Choose Add to Home Screen in Safari or Chrome.","点击 Safari 的分享按钮。":"Tap the Share button in Safari.","选择“添加到主屏幕”，再点击“添加”。":"Choose Add to Home Screen, then Add.","打开浏览器菜单“⋮”。":"Open the browser menu.","选择“添加到主屏幕”或“安装应用”。":"Choose Add to Home Screen or Install app.",
  '更多数据':'More metrics',
  '退出登录':'Log out',
@@ -298,7 +299,7 @@ for(const activity of sourceData.activity_summaries)sourceNames.add(activity.nam
 
 const quotePattern=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const englishPattern=new RegExp([...new Set([...sourceNames,...Object.keys(englishTerms)])]
-  .sort((a,b)=>b.length-a.length).map(key=>key.length===1?'(?<![\\u3400-\\u9fff])'+quotePattern(key)+'(?![\\u3400-\\u9fff])':quotePattern(key)).join('|'),'g');
+  .sort((a,b)=>b.length-a.length).map(key=>quotePattern(key)).join('|'),'g');
 const originalNamesPattern=new RegExp([...sourceNames].sort((a,b)=>b.length-a.length).map(quotePattern).join('|'),'g');
 
 function displayDateRange(from,to){

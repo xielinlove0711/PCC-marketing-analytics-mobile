@@ -12,7 +12,7 @@
  toggle.addEventListener('click',()=>{labels();setOpen(true)});close.addEventListener('click',()=>setOpen(false,true));backdrop.addEventListener('click',()=>setOpen(false,true));
  sidebar.addEventListener('click',e=>{if(mobile.matches&&e.target.closest('a[href]'))setOpen(false,true)});
  document.addEventListener('keydown',e=>{if(!mobile.matches||!document.body.classList.contains('mobile-nav-open'))return;if(e.key==='Escape')setOpen(false,true);if(e.key==='Tab'){const focusable=[...sidebar.querySelectorAll('a,button,summary')].filter(el=>el.getClientRects().length);const first=focusable[0],last=focusable.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
- mobile.addEventListener('change',()=>setOpen(false));window.addEventListener('hashchange',()=>setOpen(false));labels();setOpen(false);
+ if(mobile.addEventListener)mobile.addEventListener('change',()=>setOpen(false));else mobile.addListener(()=>setOpen(false));window.addEventListener('hashchange',()=>setOpen(false));labels();setOpen(false);
 
 })();
 
