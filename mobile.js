@@ -56,7 +56,8 @@
   }
  }
  const schedule=()=>{if(pending)return;pending=true;requestAnimationFrame(enhance)};
- new MutationObserver(schedule).observe(root,{childList:true,subtree:true});window.addEventListener('hashchange',schedule);schedule();
+ new MutationObserver(schedule).observe(root,{childList:true,subtree:true});
+ new MutationObserver(schedule).observe(document.body,{attributes:true,attributeFilter:['class']});window.addEventListener('hashchange',schedule);schedule();
  document.addEventListener('click',e=>{
   if(e.target.closest('[data-mobile-logout]'))document.getElementById('logout')?.click();
   if(e.target.closest('[data-mobile-edit]')){document.body.classList.toggle('mobile-report-editing');const edit=document.body.classList.contains('mobile-report-editing');root.querySelectorAll('[contenteditable]').forEach(n=>n.contentEditable=String(edit));e.target.textContent=txt(edit?'完成编辑':'编辑文字');if(edit)root.querySelector('[contenteditable]')?.focus();else if(typeof saveRichReport==='function')saveRichReport()}

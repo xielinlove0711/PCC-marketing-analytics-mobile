@@ -18,7 +18,7 @@ function updateLoginView(name) {
 function updateLoginLanguage(value) {
   const previousDefault=loginName.defaultValue;
   setUiLanguage(value);
-  const localizedDefault=localize('来宾');
+  const localizedDefault=localize('市场经理');
   const usedDefault=loginName.value===previousDefault;
   loginName.defaultValue=localizedDefault;
   if(usedDefault)loginName.value=localizedDefault;
@@ -40,6 +40,9 @@ loginForm.addEventListener('submit',event=>{
   loginStatus.hidden=true;
   try{sessionStorage.setItem(sessionKey,name)}catch{}
   updateLoginView(name);
+  // Explicitly initialize after revealing the page; do not rely on a hidden-page render.
+  try{render()}catch(error){console.error('Mobile initial render failed',error);document.querySelector('main').innerHTML='<section class="panel pad"><h1>'+localize('页面暂时无法加载')+'</h1><p>'+localize('请刷新重试，或打开总览。')+'</p><a href="#summary">'+localize('数据总览')+'</a></section>'}
+  window.scrollTo(0,0);
   applyPersonalSettings();
   updateScratchCount();
   logoutButton.focus();
