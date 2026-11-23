@@ -459,7 +459,9 @@ function incrementalResultHTML(r){
   if(evaluated){
     const postIndex=member?2:3;
     const values=[['活动前',d[0]?.[1],d[1]?.[1]],['活动期',d[postIndex]?.[1],d[postIndex+1]?.[1]]];
-    rows=table([['阶段'],['处理组','num'],[member?'留出组':'对照组','num'],['两组差异','num']],values.map(([label,a,b])=>[label,fmt(a,2),fmt(b,2),fmt(a-b,2)]));
+    const unitLabel=escape(r.unit||'');
+    const unitHTML=' <span class="currency-unit">'+(!/[A-Za-z]/.test(r.unit||'')?'（'+unitLabel+'）':unitLabel)+'</span>';
+    rows=table([['阶段'],['处理组'+unitHTML,'num'],[(member?'留出组':'对照组')+unitHTML,'num'],['两组差异'+unitHTML,'num']],values.map(([label,a,b])=>[label,fmt(a,2),fmt(b,2),fmt(a-b,2)]));
   }
   return '<article class="panel pad evidence-card incremental-result"><h3>'+escape(r.title)+'</h3><p class="sub">'+escape(r.detail)+' · '+escape(r.source)+'</p><p class="incremental-verdict">'+escape(incrementalVerdict(r))+'</p>'+
     (r.points?.length?chart(r.points,{heading:escape(r.title),unit:escape(r.unit),first:r.labels[0],second:r.labels[1]||'',start:r.start}):'')+
